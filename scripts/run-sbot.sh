@@ -10,12 +10,12 @@
   echo "lets see if we have existing db..."
   LOG=`sbot logt about | grep $NODE_ID`
 
-  if [[ -z "${LOG// }${HOST// }" ]]; then
+  if [[ -z "${LOG// }" && ! -z "${HOST// }" ]]; then
     echo "new node let's name it"
 
     echo "naming $HOST"
     sbot publish --type about --about $NODE_ID --name $HOST
-  elif [[ -z "${LOG// }" ]]; then
+  elif [[ ! -z "${LOG// }" ]]; then
     echo "existing node"
   elif [[ -z "${HOST// }" ]]; then
     echo "no HOST provided"
