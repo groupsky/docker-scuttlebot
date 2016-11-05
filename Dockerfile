@@ -8,5 +8,6 @@ ADD scripts/run-sbot.sh /run-sbot.sh
 RUN chmod +x /run-sbot.sh
 
 EXPOSE 8008
+EXPOSE 8008/udp
 
 CMD [ "/run-sbot.sh" ]
