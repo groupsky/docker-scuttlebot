@@ -11,16 +11,21 @@ echo Starting sbot: $HOST
 
     echo "lets see if we have existing db..."
     LOG=`sbot logt about --limit 1`
-    echo $LOG
-    if [ "$LOG" -ne "" ]; then
-	echo "seems we already have data"
-    else
+    echo "debug '${LOG}'"
+
+    if [[ -z "${LOG// }" ]]; then
+
 	echo "new node let's name it"
 
 	echo "naming $NODE_NAME"
 	sbot publish --type about --about $NODE_ID --name $NODE_NAME
 	sbot invite.create 1
 
+    else
+
+	echo "seems we already have data"
+
     fi
 )&
+
 sbot server --host $HOST
