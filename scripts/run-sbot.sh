@@ -1,29 +1,30 @@
 #!/bin/bash
 
 (
-    echo "sleeping 10s to generate manifest"
-    sleep 10
-    NODE_ID=`sbot whoami | grep "id" | cut '-d"' -f4`
-    echo "node id $NODE_ID"
+  echo "sleeping 10s to generate manifest"
+  sleep 10
 
-    echo "lets see if we have existing db..."
-    LOG=`sbot logt about --limit 1`
+  NODE_ID=`sbot whoami | grep "id" | cut '-d"' -f4`
+  echo "node id $NODE_ID"
 
-    if [[ -z "${LOG// }" ]]; then
+  echo "lets see if we have existing db..."
+  LOG=`sbot logt about | grep $NODE_ID`
 
-    	echo "new node let's name it"
+  if [[ -z "${LOG// }${NODE_NAME// }" ]]; then
+    echo "new node let's name it"
 
-    	echo "naming $NODE_NAME"
-    	sbot publish --type about --about $NODE_ID --name $NODE_NAME
+    echo "naming $NODE_NAME"
+    sbot publish --type about --about $NODE_ID --name $NODE_NAME
+  elif [[ -z "${LOG// }" ]]; then
+    echo "existing node"
+  elif [[ -z "${NODE_NAME// }" ]]; then
+    echo "no NODE_NAME provided"
+  else
+    echo "already set"
+  fi
 
-      echo "creating invite"
-    	sbot invite.create 1
-
-    else
-
-      echo "seems we already have data"
-
-    fi
+  echo "creating invite"
+  sbot invite.create 1
 )&
 
 echo Starting sbot: $HOST
