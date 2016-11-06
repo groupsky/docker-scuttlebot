@@ -3,7 +3,7 @@ FROM node:5.3
 MAINTAINER Filipe Farinha <filipe@ktorn.com>
 
 RUN npm install -g scuttlebot
-RUN npm install -g ssb-git-web
+RUN npm install -g git-ssb-web
 
 VOLUME [ "/root/.ssb" ]
 
