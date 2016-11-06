@@ -2,14 +2,13 @@ FROM node:5.3
 
 MAINTAINER Filipe Farinha <filipe@ktorn.com>
 
-RUN npm install -g scuttlebot@9.1.1
-
-ADD scripts/run-sbot.sh /run-sbot.sh
-RUN chmod +x /run-sbot.sh
+RUN npm install -g scuttlebot
+RUN npm install -g ssb-git-web
 
 VOLUME [ "/root/.ssb" ]
 
+EXPOSE 5000
 EXPOSE 8008
 EXPOSE 8008/udp
 
-CMD [ "/run-sbot.sh" ]
+CMD [ "sbot", "server", "--host", "sb.hackafe.org" ]
